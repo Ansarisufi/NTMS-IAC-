@@ -1,0 +1,38 @@
+param(
+[String]$ComputerName
+)
+foreach ($computer in $computers){
+$Computers = Get-Content C:\Sufiyanlab\comp.txt
+$OS = Get-WmiObject -Class win32_operatingsystem
+$Mem = Get-WmiObject -Class win32_physicalmemory 
+$CS = Get-WmiObject -Class win32_computersystem 
+$Proc = Get-WmiObject -Class win32_processor
+$Disk = Get-WmiObject -Class win32_logicaldisk
+$Nicinfo = Get-WmiObject -Class win32_networkadapterconfiguration |select IPAddress
+
+
+$Myobject = [PSCustomObject] @{'Host Name' = $OS.__SERVER;
+'Operating System' = $OS.Caption;
+'Installed ON' = $OS.InstallDate;
+'Service Pack' = $OS.ServicePackMajorVersion;
+'Model' = $CS.Model;
+'Make' = $CS.Manufacturer;
+'Memory Size' = $Mem.Capacity;
+'Location of DIMM' = $Mem.DeviceLocator;
+'Memory Part No' = $Mem.PartNumber;
+'Processor Model' = $Proc.Name;
+'No of CPU Installed' = $Proc.SocketDesignation;
+'Number of Cores' = $Proc.NumberOfCores;
+'IP Address' = $Nicinfo
+
+
+ 
+
+
+
+
+}
+
+$Myobject | select *,{$_.IPAddress} | Export-Csv C:\Sufiyanlab\iii.csv -NoTypeInformation
+
+}
