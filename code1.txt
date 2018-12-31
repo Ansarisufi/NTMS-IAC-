@@ -1,0 +1,20 @@
+
+$Software = Get-WmiObject -Class Win32_Installedwin32program
+
+foreach($Soft in $Software){
+
+$Myobject = [PSCustomObject] @{'Name' = [String]$Soft.Name;
+'Vendor'=[String]$Soft.Version;
+'Version'=[String]$Soft.Vendor
+
+
+
+}#object
+
+$Myobject | Export-Csv C:\Sufiyanlab\SoftwareInventory.csv -NoTypeInformation -Append
+
+
+
+
+}#foreach
+
