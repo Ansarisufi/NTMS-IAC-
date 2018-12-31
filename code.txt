@@ -1,0 +1,17 @@
+param (
+[String] $ComputerName
+
+)
+foreach ($comp in $Computers){
+$Computers = Get-Content c:\comp.txt
+
+$Soft =Get-WmiObject -Class win32_installedwin32program
+
+$Myobject = [PSCustomObject] @{'Name'= [String]$Soft.Name;
+'Version' =[String] $Soft.Version
+
+
+}
+$Myobject | export-csv c:\softwaresin.csv
+
+} 
